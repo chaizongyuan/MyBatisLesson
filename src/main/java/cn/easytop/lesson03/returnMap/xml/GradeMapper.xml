@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.easytop.lesson03.returnMap.xml.GradeMapper">
+  <resultMap type="grade" id="gradeMap" autoMapping="true">
+     <!-- 列和属性的关系  主键使用id 非主键 使用result -->
+     <id column="gid" property="gid"/>
+     <result column="gname" property="gname1"/>
+  </resultMap>
+  <!-- 用于映射一对多 -->
+  <resultMap type="grade" id="gradeOne" autoMapping="true">
+     <!-- 列和属性的关系  主键使用id 非主键 使用result -->
+     <id column="gid" property="gid"/>
+     <result column="gname" property="gname1"/>
+     <collection property="studentList" column="gid" javaType="arraylist" select="cn.easytop.lesson03.returnMap.xml.StudentMapper.queryStudentByGid"
+       autoMapping="true"
+     >
+     </collection>
+  </resultMap>
+  <select id="queryAllGrade" resultMap="gradeMap" >
+      select * from grade
+  </select>
+  
+  <select id="queryGradeByGid" resultMap="gradeMap">
+     SELECT * FROM grade WHERE gid=#{gid}
+  </select>
+  <select id="queryGrade"  resultMap="gradeOne">
+      SELECT * FROM grade WHERE gid=#{gid}
+  </select>
+  
+</mapper>

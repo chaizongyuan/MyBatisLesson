@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  接口绑定 将 接口中的方法和 对应的sql声明进行绑定
+  接口绑定的参数  可以通过索引的方式获取  索引从 0开始  
+   比如 ('s','abc')  0='sex'  1='abc'
+              param1='sex'  param2='abc'
+ -->
+<mapper namespace="cn.easytop.lesson02.xml.FoodMapper">
+  <!-- 每种返回的数据类型 都可以设置简单的别名  默认的别名 TypeAliasRegistry -->
+  <select id="queryFood" resultType="java.util.Map">
+    select * from food where foodname =#{param1} and price=#{param2}
+  </select>
+  
+  <select id="queryFoodByFoodName" resultType="food1">
+    select * from food where foodname like '%${foodName}%'
+  </select>
+  
+  
+  <delete id="deleteFood">
+     delete from food where foodid=#{0}
+  </delete>
+  <!-- selectKey在程序中获取插入的主键 -->
+  <insert id="saveFood">
+     <selectKey keyProperty="foodId" order="BEFORE" resultType="int" statementType="STATEMENT">
+        select FOOD_SEc.Nextval from dual
+     </selectKey>
+     insert into food values(#{foodId},#{foodName},#{price})
+  </insert>
+  
+</mapper>

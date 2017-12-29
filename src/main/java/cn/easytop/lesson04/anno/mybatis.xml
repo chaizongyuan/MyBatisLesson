@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 
+		是mybatis的核心配置文件
+			1.数据库的连接信息（连接池：默认的POOLED）
+			2.映射文件（增删改查）
+	指定properties配置文件位置 -->
+	<properties resource="jdbc.properties">
+	</properties>
+	
+	<!-- 给返回类型取别名 -->
+	<typeAliases>
+		<!-- 给包下边的所有类取别名（类名首字母小写为别名） -->
+		<package name="cn.easytop.lesson04.anno"/>
+		<!--<typeAlias type="cn.easytop.lesson02.Food" alias="food"/>-->	
+	</typeAliases>
+	
+  <environments default="development">
+    <environment id="development">
+    <!-- 事务管理器：默认使用jdbc事务（JDBC自动提交） -->
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username1}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  	<!-- 一张表一个mapper映射 -->
+    <mapper class="cn.easytop.lesson04.anno.StudentMapper"/>
+  </mappers>
+</configuration>

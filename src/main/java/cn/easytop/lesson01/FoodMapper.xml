@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="a">
+  <select id="selectFood" resultType="java.util.Map">
+    select * from food 
+  </select>
+  <select id="selectFoodById" resultType="java.util.Map">
+    select * from food where foodid=1
+  </select>
+   <select id="selectFoodByParam" resultType="java.util.Map">
+    select * from food where price=${myprice} and foodname='${myfoodname}'
+   </select>
+   
+   <insert id="saveFood">
+   	    insert into food values(FOOD_SEC.nextval,#{foodname},#{price})
+   </insert>
+   
+  
+  
+</mapper>

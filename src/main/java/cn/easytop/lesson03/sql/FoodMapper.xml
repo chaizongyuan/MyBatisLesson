@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+  接口绑定 将 接口中的方法和 对应的sql声明进行绑定
+  接口绑定的参数  可以通过索引的方式获取  索引从 0开始  
+   比如 ('s','abc')  0='sex'  1='abc'
+              param1='sex'  param2='abc'
+ -->
+<mapper namespace="cn.easytop.lesson03.sql.FoodMapper">
+  <!-- 每种返回的数据类型 都可以设置简单的别名  默认的别名 TypeAliasRegistry -->
+  <sql id="commonSql"></sql>
+  <select id="queryFoodByFoodName" resultType="map">
+  <include refid="commonSql"></include>
+    food where foodname like '%${foodName}%'
+  </select>
+  
+</mapper>

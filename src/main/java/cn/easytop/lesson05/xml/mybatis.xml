@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="jdbc.properties">
+	</properties>
+	<!-- 开启二级缓存 -->
+	<settings>
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+	<!-- 给返回类型取别名 -->
+	<typeAliases>
+		<!-- 给包下边的所有类取别名（类名首字母小写为别名） -->
+		<package name="cn.easytop.lesson05.xml"/>
+		<!--<typeAlias type="cn.easytop.lesson02.Food" alias="food"/>-->	
+	</typeAliases>
+	
+  <environments default="development">
+    <environment id="development">
+    <!-- 事务管理器：默认使用jdbc事务（JDBC自动提交） -->
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username1}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  	<!-- 一张表一个mapper映射 -->
+    <mapper resource="cn/easytop/lesson05/xml/studentMapper.xml"/>
+  </mappers>
+</configuration>

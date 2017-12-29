@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 
+	判断条件是否满足 满足就执行if中的SQL语句  自动拼接到sql
+	where 标签:自动判断，需要时会自动去掉and 需要时会自动加WHERE
+-->
+<mapper namespace="cn.easytop.lesson04.xml.StudentMapper">	
+	<!--if标签
+	<select id="queryStudent" resultType="student">
+		select * from student where 1=1 
+		<if test="sname!=null">
+			and sname like '%${sname}%'
+		</if>
+		<if test="address!=null">
+			and address like '%${address}%'
+		</if>	
+	</select>
+	-->
+	
+	<!--where 标签
+	<select id="queryStudent" resultType="student">
+		select * from student
+		<where>
+			<if test="sname!=null">
+				and sname like '%${sname}%'
+			</if>
+			<if test="address!=null">
+				and address like '%${address}%'
+			</if>
+		</where>	
+	</select>
+	-->
+	<!-- 第一次出现and被替换成where -->
+	<select id="queryStudent" resultType="student">
+		select * from student
+		<trim prefix="whERE"  prefixOverrides="and">
+			<if test="sname!=null">
+				and sname like '%${sname}%'
+			</if>
+			<if test="address!=null">
+				and address like '%${address}%'
+			</if>
+		</trim>	
+	</select>
+	
+	<!-- 通过性别查询 -->
+	<select id="queryBySex" resultType="student">
+		select * from student where 1=1 
+		<!-- choose when otherwise -->
+		<choose>
+			<when test="sex!=null">
+				and sex=${sex}
+			</when>
+			<otherwise>
+				and	sex=1
+			</otherwise>
+		</choose>
+	</select>	
+	
+	<!-- 修改学生信息set会动态去掉最后一个条件 	
+	<update id="updateStudent">
+			update student 
+		<set>
+			<if test="sname!=null">
+				sname=#{sname},
+			</if>
+			<if test="age!=null">
+				age=#{age},
+			</if>
+			<if test="sex!=null">	
+				sex=#{sex} 
+			</if>
+		</set>
+			where stuid=#{stuid}
+	</update>	
+-->
+
+	<!-- 用trim标签实现修改 -->
+	<update id="updateStudent">
+		update student 
+		<trim prefix="set" prefixOverrides="" suffix="" suffixOverrides=",">
+			<if test="sname!=null">
+				sname=${sname},
+			</if>
+			<if test="age!=null">
+				age=${age},
+			</if>
+			<if test="sex!=null">
+				sex=${sex}
+			</if>
+		</trim>
+			where stuid=${stuid}
+	</update>
+	
+	<!-- foreach 
+	    open="where gid in("循环开始之前追加
+	    gid in(" close=")"循环结束之后追加
+	    collection="gradeList"指定传入的值的集合
+	    separator=","自动按，分隔
+	-->
+	<select id="queryStudentByAnyGrade" resultType="student">
+		select * from student		
+			<foreach item="gid" collection="gradeList" open="where gid in(" close=")" separator=",">
+				${gid}
+			</foreach>		
+	</select>
+	
+</mapper>
